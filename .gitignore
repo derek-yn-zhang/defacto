@@ -108,6 +108,11 @@ protocol/states/
 _delta_log/
 *.parquet
 
+# Node.js (Docusaurus docs site)
+node_modules/
+.docusaurus/
+docs/build/
+
 # Docker
 .docker/
 
