@@ -46,7 +46,7 @@ jobs:
       - uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release -o dist --find-interpreter
+          args: --release -o dist -i python3.12
           manylinux: auto
       - uses: actions/upload-artifact@v4
         with:
