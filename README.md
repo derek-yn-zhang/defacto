@@ -21,10 +21,6 @@ d.history("customer").as_of("2024-01-15").execute()  # point-in-time
 d.history("customer").execute()                      # full history
 ```
 
-## Documentation
-
-[derek-yn-zhang.github.io/defacto](https://derek-yn-zhang.github.io/defacto/)
-
 ## Examples
 
 See [`examples/quickstart/`](examples/quickstart) and [`examples/showcase/`](examples/showcase).
