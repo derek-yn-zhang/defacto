@@ -19,14 +19,13 @@ classifiers = [
     "Programming Language :: Rust",
     "Topic :: Database",
 ]
-
-[project.urls]
-Repository = "https://github.com/derek-yn-zhang/defacto"
-
 dependencies = [
     "ibis-framework[duckdb]",
     "pyyaml",
 ]
+
+[project.urls]
+Repository = "https://github.com/derek-yn-zhang/defacto"
 
 [project.optional-dependencies]
 # User-facing backend extras — pip install defacto[postgres,kafka]
