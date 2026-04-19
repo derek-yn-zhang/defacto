@@ -1,0 +1,30 @@
+customer:
+  starts: lead
+
+  identity:
+    email: { match: exact }
+
+  properties:
+    email: { type: string }
+    plan: { type: string, default: free }
+
+  states:
+    lead:
+      when:
+        signup:
+          effects:
+            - create
+            - { set: { property: email, from: event.email } }
+            - { transition: { to: active } }
+
+    active:
+      when:
+        upgrade:
+          guard: "event.plan != entity.plan"
+          effects:
+            - { set: { property: plan, from: event.plan } }
+        cancel:
+          effects:
+            - { transition: { to: churned } }
+
+    churned: {}

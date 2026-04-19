@@ -1,0 +1,23 @@
+app:
+  event_type: type
+  timestamp: timestamp
+
+  events:
+    signup:
+      mappings:
+        email: { from: email }
+      hints:
+        customer: [email]
+
+    upgrade:
+      mappings:
+        email: { from: email }
+        plan: { from: plan }
+      hints:
+        customer: [email]
+
+    cancel:
+      mappings:
+        email: { from: email }
+      hints:
+        customer: [email]

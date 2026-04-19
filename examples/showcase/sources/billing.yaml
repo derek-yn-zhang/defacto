@@ -1,0 +1,29 @@
+billing:
+  event_type: event
+  timestamp: created_at
+
+  events:
+    order_created:
+      raw_type: "order.created"
+      mappings:
+        order_id: { from: id }
+        email: { from: customer_email }
+        total: { from: amount, type: number }
+        item_count: { from: line_item_count, type: integer }
+      hints:
+        order: [order_id]
+        customer: [email]
+
+    order_shipped:
+      raw_type: "order.shipped"
+      mappings:
+        order_id: { from: id }
+      hints:
+        order: [order_id]
+
+    order_delivered:
+      raw_type: "order.delivered"
+      mappings:
+        order_id: { from: id }
+      hints:
+        order: [order_id]

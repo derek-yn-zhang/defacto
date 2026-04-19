@@ -1,0 +1,125 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+wheels/
+*.whl
+sdist/
+develop-eggs/
+.installed.cfg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Compiled extensions
+*.so
+*.dylib
+*.dll
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python packaging / tools
+.eggs/
+*.tar.gz
+.pybuilder/
+pip-wheel-metadata/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
+
+# Testing
+.pytest_cache/
+.benchmarks/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+nosetests.xml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Rust
+target/
+Cargo.lock
+**/*.rs.bk
+
+# Maturin / PyO3
+*.maturin-lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+*.code-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# SQLite
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Defacto runtime
+.defacto/
+.local/
+
+# TLA+ (downloaded tools + generated artifacts)
+tla2tools.jar
+protocol/*_TTrace*
+protocol/states/
+
+# Delta Lake / Parquet artifacts
+_delta_log/
+*.parquet
+
+# Docker
+.docker/
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+
+# Logs
+*.log
+
+# Claude / AI tools
+.claude-project

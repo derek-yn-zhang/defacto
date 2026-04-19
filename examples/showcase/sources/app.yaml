@@ -1,0 +1,39 @@
+app:
+  event_type: type
+  timestamp: timestamp
+
+  events:
+    signup:
+      mappings:
+        email: { from: email }
+        phone: { from: phone }
+      hints:
+        customer: [email, phone]
+
+    subscribe:
+      mappings:
+        email: { from: email }
+        plan: { from: plan }
+        mrr: { from: mrr, type: number }
+      hints:
+        customer: [email]
+
+    upgrade:
+      mappings:
+        email: { from: email }
+        plan: { from: plan }
+        mrr: { from: mrr, type: number }
+      hints:
+        customer: [email]
+
+    login:
+      mappings:
+        email: { from: email }
+      hints:
+        customer: [email]
+
+    cancel:
+      mappings:
+        email: { from: email }
+      hints:
+        customer: [email]

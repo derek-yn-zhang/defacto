@@ -1,0 +1,35 @@
+order:
+  starts: placed
+
+  identity:
+    order_id: { match: exact }
+
+  properties:
+    total: { type: number }
+    item_count: { type: integer, default: 1 }
+
+  states:
+    placed:
+      when:
+        order_created:
+          effects:
+            - create
+            - { set: { property: total, from: event.total } }
+            - { set: { property: item_count, from: event.item_count } }
+            - { relate: { type: placed_by, target: customer, hints: { customer: [email] } } }
+        order_shipped:
+          effects:
+            - { transition: { to: shipped } }
+
+    shipped:
+      when:
+        order_delivered:
+          effects:
+            - { transition: { to: delivered } }
+
+    delivered: {}
+
+  relationships:
+    - type: placed_by
+      target: customer
+      cardinality: belongs_to

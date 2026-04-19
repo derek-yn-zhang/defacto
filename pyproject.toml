@@ -1,27 +1,84 @@
 [build-system]
-requires = ["setuptools>=68.0"]
-build-backend = "setuptools.build_meta"
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
 
 [project]
 name = "defacto"
-version = "0.0.1"
-description = "Event-sourcing entity engine with declarative YAML state machines"
+version = "0.0.2"
+description = "An entity engine that turns operational events into temporal, queryable state"
 readme = "README.md"
 requires-python = ">=3.12"
-license = {text = "MIT"}
 authors = [
     {name = "Derek Zhang", email = "derek.yn.zhang@gmail.com"},
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Rust",
     "Topic :: Database",
-    "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
 
 [project.urls]
-Homepage = "https://github.com/derekzhang/defacto"
+Repository = "https://github.com/derek-yn-zhang/defacto"
+
+dependencies = [
+    "ibis-framework[duckdb]",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+# User-facing backend extras — pip install defacto[postgres,kafka]
+postgres = ["psycopg[binary]"]
+kafka = ["confluent-kafka"]
+tiered = ["deltalake"]
+networkx = ["networkx", "scipy"]
+neo4j = ["neo4j"]
+s3 = ["boto3"]
+# Convenience: all backends
+all = [
+    "defacto[postgres,kafka,tiered,networkx,neo4j,s3]",
+]
+
+[dependency-groups]
+# Development — unit tests, property-based testing
+dev = [
+    "pytest",
+    "pytest-benchmark",
+    "hypothesis",
+]
+# Full test suite — unit + integration + benchmarks (needs backends)
+test = [
+    {include-group = "dev"},
+    "psycopg[binary]",
+    "confluent-kafka",
+    "deltalake",
+    "networkx",
+    "scipy",
+    "neo4j",
+    "psutil",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name = "defacto._core"
+manifest-path = "crates/defacto-python/Cargo.toml"
+features = ["pyo3/extension-module"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+    # Ibis DuckDB backend uses a deprecated DuckDB method — not our code
+    "ignore:fetch_arrow_table.*:DeprecationWarning",
+]
+markers = [
+    "postgres: requires Postgres (docker compose up postgres)",
+    "neo4j: requires Neo4j (docker compose up neo4j)",
+    "minio: requires MinIO (docker compose up minio)",
+    "kafka: requires Kafka (docker compose up kafka)",
+    "cloud: requires cloud credentials (CI only)",
+]

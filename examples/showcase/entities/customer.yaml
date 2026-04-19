@@ -1,0 +1,66 @@
+customer:
+  starts: lead
+
+  identity:
+    email:
+      match: exact
+      normalize: "str::to_lowercase(value)"
+    phone:
+      match: exact
+
+  properties:
+    email: { type: string, sensitive: pii, treatment: mask }
+    phone: { type: string }
+    plan: { type: string, default: free }
+    mrr: { type: number, default: 0 }
+    annual_revenue: { type: number, compute: "entity.mrr * 12" }
+    login_count: { type: integer, default: 0 }
+
+  states:
+    lead:
+      when:
+        signup:
+          effects:
+            - create
+            - { set: { property: email, from: event.email } }
+            - { set: { property: phone, from: event.phone } }
+            - { transition: { to: trial } }
+
+    trial:
+      when:
+        subscribe:
+          effects:
+            - { set: { property: plan, from: event.plan } }
+            - { set: { property: mrr, from: event.mrr } }
+            - { transition: { to: active } }
+      after:
+        - type: state_duration
+          threshold: 14d
+          effects:
+            - { transition: { to: churned } }
+
+    active:
+      when:
+        upgrade:
+          guard: "event.plan != entity.plan"
+          effects:
+            - { set: { property: plan, from: event.plan } }
+            - { set: { property: mrr, from: event.mrr } }
+        login:
+          effects:
+            - { increment: { property: login_count } }
+        cancel:
+          effects:
+            - { transition: { to: churned } }
+      after:
+        - type: inactivity
+          threshold: 90d
+          effects:
+            - { transition: { to: churned } }
+
+    churned: {}
+
+  relationships:
+    - type: placed
+      target: order
+      cardinality: has_many

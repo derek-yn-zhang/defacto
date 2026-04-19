@@ -1,7 +1,0 @@
-README.md
-pyproject.toml
-defacto/__init__.py
-defacto.egg-info/PKG-INFO
-defacto.egg-info/SOURCES.txt
-defacto.egg-info/dependency_links.txt
-defacto.egg-info/top_level.txt
