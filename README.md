@@ -21,7 +21,17 @@ d.history("customer").as_of("2024-01-15").execute()
 
 Pre-alpha. The engine works, the API is stabilizing, documentation is in progress.
 
+## Install
+
+```bash
+pip install defacto
+```
+
 ## Getting started
+
+See `examples/quickstart/` for a minimal example and `examples/showcase/` for multi-entity, multi-source, identity resolution, merges, and erasure.
+
+## Building from source
 
 Requires Python 3.12+ and a Rust toolchain.
 
@@ -29,7 +39,4 @@ Requires Python 3.12+ and a Rust toolchain.
 git clone https://github.com/derek-yn-zhang/defacto.git
 cd defacto
 make setup
-python examples/quickstart/main.py
 ```
-
-See `examples/quickstart/` for a minimal example and `examples/showcase/` for multi-entity, multi-source, identity resolution, merges, and erasure.
