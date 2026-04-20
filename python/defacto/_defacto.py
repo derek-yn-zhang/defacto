@@ -1297,6 +1297,9 @@ class Defacto:
                 Pipeline._make_normalize_failure(f) for f in result["failures"]
             )
 
+        if all_failures and self._dead_letter:
+            self._dead_letter.send(all_failures)
+
         return IngestResult(
             events_ingested=total_ingested,
             events_failed=total_failed,

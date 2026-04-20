@@ -165,6 +165,22 @@ The `Defacto` constructor accepts several configuration parameters.
 | `log_level` | `"INFO"` | Logging level |
 | `log_format` | `"console"` | Log format: `"console"` or `"json"` |
 
+## Dead letter sinks
+
+When an event fails normalization or interpretation, defacto captures the failure in the result object (`IngestResult.failures`, `BuildResult.failures`). If you also want failed events written to a durable store for later inspection or reprocessing, configure a dead letter sink.
+
+```python
+# Write failures to a JSONL file
+d = Defacto("definitions/", dead_letter={"type": "file", "path": "/var/log/defacto/failures.jsonl"})
+
+# Write failures to a Kafka topic
+d = Defacto("definitions/", dead_letter={"type": "kafka", "bootstrap_servers": "...", "topic": "dead-letter"})
+```
+
+Each failure includes the raw event, the error message, which pipeline stage it failed at (normalization, interpretation, publishing), and whether it's recoverable. File sinks append one JSON line per failure. Kafka sinks publish to the topic with the entity ID or source name as the partition key.
+
+If no dead letter sink is configured, failures are still available in result objects. They just aren't persisted anywhere beyond the caller's code.
+
 ## Logging
 
 Defacto uses structured logging with hierarchical loggers. In console mode, logs are formatted for readability. In JSON mode, all context fields are included for log aggregation.

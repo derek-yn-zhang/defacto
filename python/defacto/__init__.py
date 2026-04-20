@@ -19,7 +19,7 @@ Usage:
     result = validate_definitions(yaml_defs)
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # Core entry point
 from defacto._defacto import (
