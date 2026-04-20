@@ -126,5 +126,8 @@ credentials.json
 # Logs
 *.log
 
+# Internal docs (not published)
+.specs/
+
 # Claude / AI tools
 .claude-project
