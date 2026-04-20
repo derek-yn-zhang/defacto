@@ -116,6 +116,7 @@ The ledger is shared across all processes. All shards read and write to the same
 | SQLite | Development, testing, single-process |
 | Postgres | Production, multi-process, sharding |
 | Postgres + Delta Lake | Long retention, cost-sensitive, compliance |
+| Aurora / CockroachDB | Distributed writes, high shard counts (future) |
 
 ### State history
 
