@@ -2505,9 +2505,8 @@ class IdentityInspection:
     def merges(self, entity_id: str) -> list[dict[str, Any]]:
         """Get merge history for an entity.
 
-        Requires a merge log table which is not yet implemented.
-        Merges currently update identity rows in place without
-        recording a history trail.
+        The merge_log table exists and is populated on every merge —
+        this query interface to surface it is not yet wired up.
 
         Args:
             entity_id: Entity to look up merges for.
@@ -2515,7 +2514,7 @@ class IdentityInspection:
         Returns:
             List of merge events (merged_entity, timestamp, trigger_event).
         """
-        raise NotImplementedError("Merge history requires a merge log table (not yet implemented)")
+        raise NotImplementedError("merges() query interface not yet implemented; merge_log table is populated")
 
 
 # ---------------------------------------------------------------------------

@@ -9,7 +9,22 @@ permissions:
   id-token: write
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: astral-sh/setup-uv@v3
+      - run: make test-rust
+      - run: make setup
+      - run: make test
+
   build-sdist:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +39,7 @@ jobs:
           path: dist/*.tar.gz
 
   build-wheels:
+    needs: [test]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
